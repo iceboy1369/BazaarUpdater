@@ -37,7 +37,7 @@ repositories {
 
 ```kotlin
 dependencies {
-    implementation("com.github.cafebazaar:bazaarUpdater:1.0.0-beta3")
+    implementation("com.github.iceboy1369:BazaarUpdater:v1.0.0-beta4")
 }
 ```
 
@@ -45,7 +45,7 @@ dependencies {
 
 ```groovy
 dependencies {
-    implementation 'com.github.cafebazaar:bazaarUpdater:1.0.0-beta3'
+    implementation 'com.github.iceboy1369:BazaarUpdater:v1.0.0-beta4'
 }
 ```
 ## Usage
@@ -54,9 +54,8 @@ dependencies {
 
 To check if there are any updates available for your application on Bazaar, use the following code:
 
-
 ```kotlin
-BazaarUpdater.getLastUpdateState(context = context) { result ->
+BazaarUpdater.getLastUpdateState(context = context, packageName = "your package name") { result ->
     when(result) {
         UpdateResult.AlreadyUpdated -> {
             // Handle the case where the app is already updated
@@ -76,7 +75,7 @@ BazaarUpdater.getLastUpdateState(context = context) { result ->
 <details><summary><b>Java Usage</b></summary>
 
 ```java
-BazaarUpdater.getLastUpdateState(context, result -> {
+BazaarUpdater.getLastUpdateState(context, packageName, result -> {
     if (result.isAlreadyUpdated()) {
         // Handle the case where the app is already updated
     } else if (result.isUpdateNeeded()) {
@@ -89,6 +88,7 @@ BazaarUpdater.getLastUpdateState(context, result -> {
 });
 ```
 </details>
+Notice: The packageName can be empty and then library get it from context.
 
 #### Update Result States
 
@@ -101,9 +101,10 @@ BazaarUpdater.getLastUpdateState(context, result -> {
 ### Updating the Application
 
 To update your application when a new version is available on Bazaar, simply call:
+Notice: The packageName can be empty and then library get it from context.
 
 ```kotlin
-BazaarUpdater.updateApplication(context = context)
+BazaarUpdater.updateApplication(context = context, packageName = "your package name")
 ```
 
 ## Coming soon 🔥

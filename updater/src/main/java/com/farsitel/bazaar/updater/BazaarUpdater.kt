@@ -18,10 +18,12 @@ public object BazaarUpdater {
     @JvmStatic
     public fun getLastUpdateState(
         context: Context,
+        packageName: String = "",
         listener: OnUpdateResult,
     ) {
         getLastUpdateState(
             context = context,
+            packageName = packageName,
             scope = retrieveScope(context),
             listener = listener,
         )
@@ -30,6 +32,7 @@ public object BazaarUpdater {
     @JvmSynthetic
     public fun getLastUpdateState(
         context: Context,
+        packageName: String = "",
         scope: CoroutineScope,
         listener: OnUpdateResult,
     ) {
@@ -38,6 +41,7 @@ public object BazaarUpdater {
         } else {
             initService(
                 context = context,
+                packageName = packageName,
                 scope = scope,
                 listener = listener,
             )
@@ -45,13 +49,18 @@ public object BazaarUpdater {
     }
 
     @JvmStatic
-    public fun updateApplication(context: Context) {
+    public fun updateApplication(
+        context: Context,
+        packageName: String = "",
+    ) {
+        val pkName = packageName.ifEmpty { context.packageName }
+
         val intent = if (verifyBazaarIsInstalled(context).not()) {
-            Intent(Intent.ACTION_VIEW, "$BAZAAR_WEB_APP_DETAIL${context.packageName}".toUri())
+            Intent(Intent.ACTION_VIEW, "$BAZAAR_WEB_APP_DETAIL${pkName}".toUri())
         } else {
             Intent(
                 Intent.ACTION_VIEW,
-                "$BAZAAR_THIRD_PARTY_APP_DETAIL${context.packageName}".toUri(),
+                "$BAZAAR_THIRD_PARTY_APP_DETAIL${pkName}".toUri(),
             ).apply {
                 setPackage(BAZAAR_PACKAGE_NAME)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -73,12 +82,14 @@ public object BazaarUpdater {
 
     private fun initService(
         context: Context,
+        packageName: String = "",
         scope: CoroutineScope,
         listener: OnUpdateResult,
     ) {
+        val pkName = packageName.ifEmpty { context.packageName }
         connection = WeakReference(
             UpdateServiceConnection(
-                packageName = context.packageName,
+                packageName = pkName,
                 scope = scope,
                 bazaarVersionCode = getBazaarVersionCode(context),
                 onResult = { targetVersion ->

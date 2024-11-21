@@ -5,7 +5,7 @@
 </p>
 
 [![GitHub License](https://img.shields.io/github/license/cafebazaar/BazaarPay)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Download](https://jitpack.io/v/cafebazaar/BazaarUpdater.svg)](https://jitpack.io/#cafebazaar/BazaarUpdater)
+[![Download](https://jitpack.io/v/iceboy1369/BazaarUpdater.svg)](https://jitpack.io/#iceboy1369/BazaarUpdater)
 
 
 BazaarUpdater is an Android library that simplifies checking for updates and managing the update process for your application on Bazaar.
@@ -101,11 +101,11 @@ Notice: The packageName can be empty and then library get it from context.
 ### Updating the Application
 
 To update your application when a new version is available on Bazaar, simply call:
-Notice: The packageName can be empty and then library get it from context.
 
 ```kotlin
 BazaarUpdater.updateApplication(context = context, packageName = "your package name")
 ```
+Notice: The packageName can be empty and then library get it from context.
 
 ## Coming soon 🔥
 <p align="center">
